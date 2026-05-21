@@ -4,20 +4,6 @@ A FastAPI web app that accepts two face photos, aligns both faces into the same 
 
 This is a face-averaging and image-processing demo. The similarity score describes how easily two uploaded photos align and blend; it is not identity verification.
 
-## Live Demo
-
-After deploying, place your public app URL here:
-
-```text
-https://your-service-name.onrender.com
-```
-
-The root URL opens the web app. API docs are available at:
-
-```text
-https://your-service-name.onrender.com/docs
-```
-
 ## Features
 
 - Upload any two clear face photos.
@@ -77,20 +63,6 @@ Example response:
   }
 }
 ```
-
-## Deploying On Render
-
-This repo includes `render.yaml`.
-
-1. Push the project to GitHub.
-2. Create a new Blueprint on Render from the GitHub repository.
-3. Render will install `requirements.txt` and run:
-
-```bash
-uvicorn app.main:app --host 0.0.0.0 --port $PORT
-```
-
-The generated Render URL is the link you can place in the `Live Demo` section above.
 
 ## Runtime Data
 
