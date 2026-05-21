@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How It Works | Two Face Composite</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <main class="page legal-page">
+      <section class="hero">
+        <p class="eyebrow">Technical Notes</p>
+        <h1>How the composite and similarity score are produced.</h1>
+        <p class="lede">
+          This project uses face landmarks as the common reference frame. The score is a
+          visual-compositing similarity estimate, not biometric identity verification.
+        </p>
+        <div class="hero-actions">
+          <a class="hero-button" href="/">Back to App</a>
+          <a class="hero-link" href="/docs">API Docs</a>
+        </div>
+      </section>
+
+      <section class="panel legal-panel">
+        <h2>1. Face detection</h2>
+        <p>Each uploaded image is decoded with OpenCV. MediaPipe Face Landmarker estimates one face and its landmarks. If landmarks are not found immediately, the app falls back to OpenCV Haar face detection for the crop and then tries landmarks again.</p>
+
+        <h2>2. Crop and alignment</h2>
+        <p>The detected face bounding region is expanded into a square crop. The crop is rotated so the eye landmarks are level, then resized to a shared 256 by 256 pixel canvas.</p>
+
+        <h2>3. Shared average shape</h2>
+        <p>The two aligned landmark sets are averaged point by point. This mean landmark set becomes the target geometry for the composite.</p>
+
+        <h2>4. Triangle warp</h2>
+        <p>The app builds a Delaunay triangle mesh over the target landmarks and image boundary points. Each triangle from both faces is affine-warped into the target shape, which keeps eyes, nose, mouth, jaw, and face outline in comparable positions.</p>
+
+        <h2>5. Composite blend</h2>
+        <p>The two warped face images are blended with equal weight. The result is written as a runtime image under static storage so the browser can display it.</p>
+
+        <h2>6. Similarity metrics</h2>
+        <p>Landmark geometry compares normalized landmark structure. Warp similarity estimates how little each face needed to deform to reach the shared shape. Texture similarity compares grayscale detail after alignment. Composite agreement measures remaining pixel-level variation after warping.</p>
+
+        <h2>7. Limitations</h2>
+        <p>Scores are affected by lighting, camera angle, expression, facial hair, glasses, blur, and crop quality. A high score means the images are visually easy to align and blend; it does not prove the two images show the same person.</p>
+      </section>
+    </main>
+  </body>
+</html>

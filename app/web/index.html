@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Two Face Composite</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">Two Face Composite</p>
+        <h1>Upload two face photos. Get one blended composite and a similarity breakdown.</h1>
+        <p class="lede">
+          The app detects a face in each image, aligns their landmark geometry, warps both faces
+          toward the same average shape, and blends them into a single 50/50 composite.
+        </p>
+        <div class="hero-actions">
+          <a class="hero-button" href="#composer">Make a Composite</a>
+          <a class="hero-link" href="/how-it-works">Read the Technical Notes</a>
+        </div>
+      </section>
+
+      <section class="panel composer" id="composer">
+        <div class="panel-head">
+          <div>
+            <h2>Face Pair</h2>
+            <p>Use clear, front-facing photos for the most stable alignment and scoring.</p>
+          </div>
+          <button id="submit-button" class="submit-button" type="button" disabled>Generate composite</button>
+        </div>
+
+        <div class="upload-grid">
+          <label id="dropzone-a" class="dropzone" for="file-a">
+            <input id="file-a" type="file" accept="image/*" hidden />
+            <span class="dropzone-title">First photo</span>
+            <span id="meta-a" class="dropzone-copy">Drop or browse an image</span>
+            <img id="preview-a" class="input-preview" alt="First selected face photo" hidden />
+          </label>
+
+          <label id="dropzone-b" class="dropzone" for="file-b">
+            <input id="file-b" type="file" accept="image/*" hidden />
+            <span class="dropzone-title">Second photo</span>
+            <span id="meta-b" class="dropzone-copy">Drop or browse an image</span>
+            <img id="preview-b" class="input-preview" alt="Second selected face photo" hidden />
+          </label>
+        </div>
+
+        <p id="status-line" class="status-line">Waiting for two images.</p>
+      </section>
+
+      <section class="result-grid">
+        <article class="panel result-panel">
+          <div class="preview-head">
+            <h2>Composite</h2>
+            <span id="result-meta" class="meta">No composite yet</span>
+          </div>
+          <div class="preview-frame result-frame">
+            <img id="composite-preview" alt="Generated two-face composite" hidden />
+            <div id="result-empty" class="empty-state">Your blended face composite will appear here.</div>
+          </div>
+        </article>
+
+        <article class="panel metrics-panel">
+          <div class="score-ring">
+            <span id="overall-score">--</span>
+            <small>overall visual similarity</small>
+          </div>
+          <div class="metric-list">
+            <div class="metric-row">
+              <span>Landmark geometry</span>
+              <strong id="landmark-score">--</strong>
+            </div>
+            <div class="metric-row">
+              <span>Warp similarity</span>
+              <strong id="warp-score">--</strong>
+            </div>
+            <div class="metric-row">
+              <span>Texture similarity</span>
+              <strong id="texture-score">--</strong>
+            </div>
+            <div class="metric-row">
+              <span>Composite agreement</span>
+              <strong id="agreement-score">--</strong>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="technical-grid">
+        <article class="panel info-panel">
+          <h2>How the composite is made</h2>
+          <p>The detector estimates facial landmarks for both photos, crops each face, rotates the crop so the eyes are level, and resizes it to a shared 256 by 256 frame.</p>
+          <p>Both faces are then warped with a Delaunay triangle mesh so their eyes, nose, mouth, jawline, and face boundary move toward the average landmark shape.</p>
+          <p>The final image is a 50/50 pixel blend of the two warped faces. Inputs are not retained by the service; only the generated output image is written for display.</p>
+        </article>
+
+        <article class="panel info-panel">
+          <h2>What the score means</h2>
+          <p>The score is a visual similarity estimate for compositing, not an identity-verification result. It tells you how easily the two faces align and blend.</p>
+          <p>Landmark geometry compares normalized face structure. Warp similarity measures how much deformation was needed. Texture similarity compares brightness/detail after alignment. Composite agreement measures remaining pixel-level variation.</p>
+          <p>Higher scores usually mean the people have more similar pose, face proportions, and image texture. Lighting, blur, expression, camera angle, and glasses can move the score.</p>
+        </article>
+      </section>
+
+      <footer class="site-footer">
+        <div>
+          <strong>Two Face Composite</strong>
+          <p class="footer-copy">A small FastAPI demo for face averaging, landmark warping, and visual similarity scoring.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="/privacy">Privacy</a>
+          <a href="/how-it-works">How It Works</a>
+          <a href="/docs">API Docs</a>
+        </nav>
+      </footer>
+    </main>
+
+    <script src="/assets/app.js" defer></script>
+  </body>
+</html>

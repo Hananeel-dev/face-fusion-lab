@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy | Two Face Composite</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <main class="page legal-page">
+      <section class="hero">
+        <p class="eyebrow">Privacy</p>
+        <h1>Inputs are processed to generate a composite, not kept as a gallery.</h1>
+        <p class="lede">
+          The app is designed as a small technical demo. It accepts two uploaded photos,
+          creates one blended output, and returns visual similarity metrics.
+        </p>
+        <div class="hero-actions">
+          <a class="hero-button" href="/">Back to App</a>
+        </div>
+      </section>
+
+      <section class="panel legal-panel">
+        <h2>What is processed</h2>
+        <p>The service decodes each uploaded image, detects one face, estimates landmarks, aligns the faces, creates the composite, and calculates metric values.</p>
+
+        <h2>What is retained</h2>
+        <p>The generated composite image is written to runtime storage so the web page can display it. Runtime outputs are ignored by Git and are not part of the source repository.</p>
+
+        <h2>What is not intentionally retained</h2>
+        <p>The uploaded input images and individual extracted face crops are not saved by the application code.</p>
+
+        <h2>About the score</h2>
+        <p>The similarity score is based on visual alignment and pixel variation. It should not be used for authentication, identity verification, or sensitive decisions.</p>
+      </section>
+    </main>
+  </body>
+</html>
